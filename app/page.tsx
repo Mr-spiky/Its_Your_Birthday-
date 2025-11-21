@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 
 export default function Home() {
   const [showSurprise, setShowSurprise] = useState(false);
@@ -10,7 +11,7 @@ export default function Home() {
 
   // Photo slideshow data
   const photos = [
-    { caption: "The day we first met - my heart knew you were special" },
+    { caption: "The day we first met - my heart knew you were special", image: "/image/582117910_1734520943884509_387080101035315742_n.jpg" },
     { caption: "Every moment with you feels like a dream" },
     { caption: "Your smile lights up my entire world" },
     { caption: "Together, we create the most beautiful memories" },
@@ -152,16 +153,35 @@ export default function Home() {
                   }`}
                 >
                   <div className="w-full h-full bg-gradient-to-br from-pink-200 to-rose-200 rounded-2xl flex items-center justify-center relative overflow-hidden">
-                    {/* Placeholder for photo */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-pink-300/50 via-rose-300/50 to-pink-400/50"></div>
-                    <div className="relative z-10 text-center p-4 sm:p-6 md:p-8">
-                      <div className="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 mx-auto mb-4 sm:mb-6 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center border-2 sm:border-4 border-white/50 shadow-xl">
-                        <span className="text-4xl sm:text-5xl md:text-6xl">📸</span>
-                      </div>
-                      <p className="text-base sm:text-lg md:text-2xl text-gray-700 italic font-medium px-2" style={{ fontFamily: "'Playfair Display', serif" }}>
-                        {photo.caption}
-                      </p>
-                    </div>
+                    {photo.image ? (
+                      <>
+                        <Image
+                          src={photo.image}
+                          alt={photo.caption}
+                          fill
+                          className="object-cover rounded-2xl"
+                          priority={index === 0}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                        <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-8 z-10">
+                          <p className="text-base sm:text-lg md:text-2xl text-white italic font-medium px-2 drop-shadow-lg" style={{ fontFamily: "'Playfair Display', serif" }}>
+                            {photo.caption}
+                          </p>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="absolute inset-0 bg-gradient-to-br from-pink-300/50 via-rose-300/50 to-pink-400/50"></div>
+                        <div className="relative z-10 text-center p-4 sm:p-6 md:p-8">
+                          <div className="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 mx-auto mb-4 sm:mb-6 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center border-2 sm:border-4 border-white/50 shadow-xl">
+                            <span className="text-4xl sm:text-5xl md:text-6xl">📸</span>
+                          </div>
+                          <p className="text-base sm:text-lg md:text-2xl text-gray-700 italic font-medium px-2" style={{ fontFamily: "'Playfair Display', serif" }}>
+                            {photo.caption}
+                          </p>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               ))}
